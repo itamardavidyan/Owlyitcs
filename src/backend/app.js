@@ -10,6 +10,7 @@ app.use(function(req, res, next) {
 
 const insetToArrayAt = (arr, index, value) => {
     arr.splice(index, 0, value);
+    arr.splice(-1);
     return arr;
 }
 
