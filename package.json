@@ -1,5 +1,8 @@
 {
   "proxy": "http://localhost:3000",
+  "scripts": {
+    "start server": "node ./src/backend/app.js",
+  },
   "dependencies": {
     "express": "^4.17.1"
   }
