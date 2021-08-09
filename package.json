@@ -1,9 +1,15 @@
 {
   "proxy": "http://localhost:3000",
   "scripts": {
-    "start server": "node ./src/backend/app.js",
+    "start:server": "node ./src/backend/app.js",
+    "start:app": "cd ./src/frontend && http-server",
+    "test": "./node_modules/.bin/cypress open"
   },
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "cypress": "^8.2.0",
+    "http-server": "^13.0.0"
   }
 }
