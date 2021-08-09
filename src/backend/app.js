@@ -2,15 +2,17 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+const numberOfCommonWords = 5;
+
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 
-const insetToArrayAt = (arr, index, value) => {
+const insertToArrayAt = (arr, index, value) => {
     arr.splice(index, 0, value);
-    arr.splice(-1);
+    if (arr.length > numberOfCommonWords) arr.splice(-1);
     return arr;
 }
 
@@ -21,6 +23,8 @@ app.get('/parse', (req, res) => {
     const words = text.split(/\s+/);
 
     words.forEach(word => {
+        word = word.trim();
+        if (word.length === 0) return;
         const counter = wordCounts[word];
         if (!counter) {
             wordCounts[word] = 1;
@@ -35,7 +39,6 @@ app.get('/parse', (req, res) => {
     // , ['', 0])
 
     // most common words
-    const numberOfCommonWords = 5;
     const result = Object.entries(wordCounts).reduce((mostCommonWords, [word, counter]) => { 
         const lastIndex = mostCommonWords.length - 1;
         const smallestCounter = lastIndex >= 0 ? mostCommonWords[lastIndex].counter : Infinity;
@@ -45,7 +48,7 @@ app.get('/parse', (req, res) => {
         }
 
         for (let i = 0; i < mostCommonWords.length; i++) {
-            if (counter > mostCommonWords[i].counter) return insetToArrayAt(mostCommonWords, i, { word, counter });
+            if (counter > mostCommonWords[i].counter) return insertToArrayAt(mostCommonWords, i, { word, counter });
         }
     }, [])
 
