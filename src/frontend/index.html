@@ -3,7 +3,7 @@
 <head>
     <script>
         function handleSubmit() {
-            const myText = document.myForm.myText.value;
+            const myText = document.myForm.myText.value.replaceAll('\n', ' ');
             fetch(`http://localhost:3000/parse?text=${myText}`)
                 .then(res => res.json())
                 .then(({ result }) => {
